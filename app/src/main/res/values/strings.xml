@@ -6,4 +6,5 @@
     <string name="title">Title</string>
     <string name="ingredients">Ingredients</string>
     <string name="steps">Steps</string>
+    <string name="lets_cook">Cook</string>
 </resources>
