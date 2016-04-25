@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Cookbook</string>
+    <string name="action_settings">Settings</string>
+    <string name="save">Save</string>
+    <string name="recipe_editor">Edit</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="due_date">Due</string>
+</resources>
