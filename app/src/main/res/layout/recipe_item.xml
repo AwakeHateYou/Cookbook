@@ -14,4 +14,13 @@
         android:id="@+id/titleText"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:layout_alignParentLeft="true"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/deleteButton"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="true"/>
 </RelativeLayout>

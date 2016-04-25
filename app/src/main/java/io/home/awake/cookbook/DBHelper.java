@@ -26,5 +26,6 @@ public class DBHelper extends SQLiteOpenHelper {
 //        db.execSQL("DROP TABLE IF IT EXISTS " + tableName);
 //        // Создаём новую таблицу
 //        onCreate(db);
+       // db.delete("recipes", "_id = " + String.valueOf(adapter.getItemId(position)), null);
     }
 }

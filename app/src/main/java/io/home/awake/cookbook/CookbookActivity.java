@@ -16,14 +16,18 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+import io.home.awake.cookbook.util.SwipeDismissListViewTouchListener;
 
 public class CookbookActivity extends AppCompatActivity {
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.recipeList) ListView todoListView;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.recipeList)
+    ListView recipeListView;
     SimpleCursorAdapter adapter;
     Cursor recipeListCursor;
     SQLiteDatabase db;
     DBHelper dbh;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,17 +36,19 @@ public class CookbookActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         dbh = new DBHelper(getApplication());
         db = dbh.getWritableDatabase();
-       // db.execSQL("insert into recipes(title, ingredients, steps) values('Яйцо', 'коко', '123')");
+        // db.execSQL("insert into recipes(title, ingredients, steps) values('Яйцо', 'коко', '123')");
         initListAdapter();
+        swipe();
     }
+
     private void initListAdapter() {
         recipeListCursor = db.query("recipes", null, null, null, null, null, "_id desc");
-        String[] from = new String[] { "title" };
-        int[] to = new int[] { R.id.titleText };
+        String[] from = new String[]{"title"};
+        int[] to = new int[]{R.id.titleText};
         adapter = new SimpleCursorAdapter(this,
                 R.layout.recipe_item, recipeListCursor, from, to,
                 CursorAdapter.FLAG_AUTO_REQUERY);
-        todoListView.setAdapter(adapter);
+        recipeListView.setAdapter(adapter);
     }
 
     @OnClick(R.id.fab)
@@ -51,11 +57,12 @@ public class CookbookActivity extends AppCompatActivity {
         startActivityForResult(intent, 1);
     }
 
+
     @OnItemClick(R.id.recipeList)
     public void onListItemClicked(int position) {
         String itemId = String.valueOf(adapter.getItemId(position));
         Cursor cursor = db.query("recipes", null,
-                "_id = ?", new String[] { itemId }, null, null, null);
+                "_id = ?", new String[]{itemId}, null, null, null);
         cursor.moveToNext();
         Recipe recipe = new Recipe(
                 Integer.valueOf(cursor.getInt(cursor.getColumnIndex("_id"))),
@@ -68,6 +75,27 @@ public class CookbookActivity extends AppCompatActivity {
         startActivityForResult(intent, 1);
     }
 
+    public void swipe() {
+        SwipeDismissListViewTouchListener touchListener =
+                new SwipeDismissListViewTouchListener(
+                        recipeListView,
+                        new SwipeDismissListViewTouchListener.DismissCallbacks() {
+                            @Override
+                            public boolean canDismiss(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    db.delete("recipes", "_id = " + String.valueOf(adapter.getItemId(position)), null);
+                                    recipeListCursor.requery();
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+        recipeListView.setOnTouchListener(touchListener);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
