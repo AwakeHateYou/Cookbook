@@ -4,6 +4,6 @@
     <string name="save">Save</string>
     <string name="recipe_editor">Edit</string>
     <string name="title">Title</string>
-    <string name="description">Description</string>
-    <string name="due_date">Due</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="steps">Steps</string>
 </resources>

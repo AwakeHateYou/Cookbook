@@ -39,23 +39,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/description"
+                android:text="@string/ingredients"
                 android:layout_gravity="left|center_vertical"/>
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/descriptionText" android:layout_gravity="left|center_vertical"/>
+                android:id="@+id/ingredientsText" android:layout_gravity="left|center_vertical"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/due_date"
+                android:text="@string/steps"
                 android:id="@+id/textView" android:layout_gravity="left|center_vertical"/>
-            <DatePicker
+            <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:datePickerMode="spinner"
-                android:calendarViewShown="false"
-                android:id="@+id/dueDatePicker"/>
+                android:id="@+id/stepsText" android:layout_gravity="left|center_vertical"/>
         </LinearLayout>
     </ScrollView>
 </android.support.design.widget.CoordinatorLayout>

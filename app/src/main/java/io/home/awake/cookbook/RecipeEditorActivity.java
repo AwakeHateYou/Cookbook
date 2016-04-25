@@ -17,8 +17,8 @@ import butterknife.ButterKnife;
 
 public class RecipeEditorActivity extends AppCompatActivity {
     @Bind(R.id.titleText) EditText titleText;
-    @Bind(R.id.descriptionText) EditText descriptionText;
-    @Bind(R.id.dueDatePicker) DatePicker dueDatePicker;
+    @Bind(R.id.ingredientsText) EditText ingredientsText;
+    @Bind(R.id.stepsText) EditText stepsText;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,10 +29,8 @@ public class RecipeEditorActivity extends AppCompatActivity {
         Recipe recipe = getIntent().getParcelableExtra("recipe");
         if (recipe != null) {
             titleText.setText(recipe.getTitle());
-            descriptionText.setText(recipe.getDescription());
-            Calendar calendar = recipe.getDueDateAsCalendar();
-            dueDatePicker.init(calendar.get(YEAR), calendar.get(MONTH),
-                    calendar.get(DAY_OF_MONTH), null);
+            ingredientsText.setText(recipe.getIngredients());
+            stepsText.setText(recipe.getSteps());
         }
     }
 
@@ -59,9 +57,8 @@ public class RecipeEditorActivity extends AppCompatActivity {
         Recipe recipe = getIntent().getParcelableExtra("recipe");
         if (recipe == null) recipe = new Recipe();
         recipe.setTitle(titleText.getText().toString());
-        recipe.setDescription(descriptionText.getText().toString());
-        recipe.setDueDate(dueDatePicker.getYear(),
-                dueDatePicker.getMonth(), dueDatePicker.getDayOfMonth());
+        recipe.setIngredients(ingredientsText.getText().toString());
+        recipe.setSteps(stepsText.getText().toString());
         Intent resultIntent = new Intent();
         resultIntent.putExtra("recipe", recipe);
         setResult(RESULT_OK, resultIntent);

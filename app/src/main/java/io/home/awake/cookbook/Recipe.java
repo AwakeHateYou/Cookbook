@@ -35,6 +35,9 @@ public class Recipe implements Parcelable{
             return new Recipe[size];
         }
     };
+    public void setId(Integer id) {
+        this.id = id;
+    }
     public int getId() {
         return id;
     }
