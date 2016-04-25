@@ -9,9 +9,11 @@ import android.os.Parcelable;
  * РћРґРёРЅ СЂРµС†РµРїС‚.
  */
 public class Recipe implements Parcelable{
-    Integer id;
+    int id;
     String title, ingredients, steps;
-    public Recipe(){}
+    public Recipe(){
+        this.id = 0;
+    }
     public Recipe(int id, String title, String ingredients, String steps){
         this.id = id;
         this.title = title;
@@ -78,13 +80,5 @@ public class Recipe implements Parcelable{
     public int describeContents() {
         return 0;
     }
-    @Override
-    public String toString() {
-        return "Todo{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + ingredients + '\'' +
-                ", dueDate='" + steps + '\'' +
-                '}';
-    }
+
 }
