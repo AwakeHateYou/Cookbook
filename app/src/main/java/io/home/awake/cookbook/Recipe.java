@@ -38,7 +38,7 @@ public class Recipe implements Parcelable{
     public void setId(Integer id) {
         this.id = id;
     }
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -77,5 +77,14 @@ public class Recipe implements Parcelable{
     @Override
     public int describeContents() {
         return 0;
+    }
+    @Override
+    public String toString() {
+        return "Todo{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + ingredients + '\'' +
+                ", dueDate='" + steps + '\'' +
+                '}';
     }
 }

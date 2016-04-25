@@ -55,7 +55,8 @@ public class RecipeEditorActivity extends AppCompatActivity {
 
     public void onSaveButtonClick() {
         Recipe recipe = getIntent().getParcelableExtra("recipe");
-        if (recipe == null) recipe = new Recipe();
+        if (recipe == null)
+            recipe = new Recipe();
         recipe.setTitle(titleText.getText().toString());
         recipe.setIngredients(ingredientsText.getText().toString());
         recipe.setSteps(stepsText.getText().toString());

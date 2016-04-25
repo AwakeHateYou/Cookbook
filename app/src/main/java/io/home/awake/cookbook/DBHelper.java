@@ -22,6 +22,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        // Удаляем старую таблицу и создаём новую
+//        db.execSQL("DROP TABLE IF IT EXISTS " + tableName);
+//        // Создаём новую таблицу
+//        onCreate(db);
     }
 }

@@ -32,6 +32,7 @@ public class CookbookActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         dbh = new DBHelper(getApplication());
         db = dbh.getWritableDatabase();
+       // db.execSQL("insert into recipes(title, ingredients, steps) values('Яйцо', 'коко', '123')");
         initListAdapter();
     }
     private void initListAdapter() {
@@ -77,9 +78,9 @@ public class CookbookActivity extends AppCompatActivity {
             cv.put("ingredients", recipe.getIngredients());
             cv.put("steps", recipe.getSteps());
             if (recipe.isNew()) {
-                db.insert("recipe", null, cv);
+                db.insert("recipes", null, cv);
             } else {
-                db.update("recipe", cv, "_id = ?",
+                db.update("recipes", cv, "_id = ?",
                         new String[] { String.valueOf(recipe.getId()) });
             }
             recipeListCursor.requery();
