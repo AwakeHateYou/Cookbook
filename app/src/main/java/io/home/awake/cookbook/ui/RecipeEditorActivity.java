@@ -1,4 +1,4 @@
-package io.home.awake.cookbook;
+package io.home.awake.cookbook.ui;
 
 
 import android.content.Intent;
@@ -14,6 +14,8 @@ import static java.util.Calendar.*;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.home.awake.cookbook.R;
+import io.home.awake.cookbook.Recipe;
 
 public class RecipeEditorActivity extends AppCompatActivity {
     @Bind(R.id.titleText) EditText titleText;

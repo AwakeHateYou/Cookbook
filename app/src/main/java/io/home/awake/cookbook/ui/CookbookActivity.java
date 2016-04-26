@@ -1,4 +1,4 @@
-package io.home.awake.cookbook;
+package io.home.awake.cookbook.ui;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -16,11 +16,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+import io.home.awake.cookbook.DBHelper;
+import io.home.awake.cookbook.R;
+import io.home.awake.cookbook.Recipe;
 import io.home.awake.cookbook.util.SwipeDismissListViewTouchListener;
 
 public class CookbookActivity extends AppCompatActivity {
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.recipeList)
     ListView recipeListView;
     SimpleCursorAdapter adapter;
@@ -51,10 +53,16 @@ public class CookbookActivity extends AppCompatActivity {
         recipeListView.setAdapter(adapter);
     }
 
+
+//    @OnClick(R.id.fab)
+//    public void onFABClick(View view) {
+//        Intent intent = new Intent(this, RecipeEditorActivity.class);
+//        startActivityForResult(intent, 1);
+//    }
     @OnClick(R.id.fab)
     public void onFABClick(View view) {
-        Intent intent = new Intent(this, RecipeEditorActivity.class);
-        startActivityForResult(intent, 1);
+        Intent intent = new Intent(this, CookbookHelperActivity.class);
+        startActivity(intent);
     }
 
 
