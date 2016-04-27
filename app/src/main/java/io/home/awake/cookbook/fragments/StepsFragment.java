@@ -29,7 +29,7 @@ public class StepsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageNumber = 2;
+        pageNumber = 1;
     }
 
     @Override

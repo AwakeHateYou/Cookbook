@@ -16,11 +16,11 @@ import io.home.awake.cookbook.R;
 
 public class IngredientsFragment extends Fragment {
     private int pageNumber;
-
-    public static IngredientsFragment newInstance(int page) {
+    private String text;
+    public static IngredientsFragment newInstance(int page, String text) {
         IngredientsFragment fragment = new IngredientsFragment();
         Bundle args = new Bundle();
-        args.putInt("num", page);
+        args.putString("ing", text);
         fragment.setArguments(args);
         return fragment;
     }
@@ -31,15 +31,15 @@ public class IngredientsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageNumber = 1;
+        text = getArguments() != null ? getArguments().getString("ing") : "";
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View result=inflater.inflate(R.layout.fragment_ingredients, container, false);
+        View result = inflater.inflate(R.layout.fragment_ingredients, container, false);
         TextView pageHeader = (TextView)result.findViewById(R.id.ingredientsTextFragment);
-        pageHeader.setText("ФрагментА " + String.valueOf(pageNumber));
+        pageHeader.setText(text);
         return result;
     }
 }

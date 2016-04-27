@@ -10,21 +10,23 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+import butterknife.OnItemLongClick;
+import butterknife.OnLongClick;
 import io.home.awake.cookbook.DBHelper;
 import io.home.awake.cookbook.R;
 import io.home.awake.cookbook.Recipe;
 import io.home.awake.cookbook.util.SwipeDismissListViewTouchListener;
 
 public class CookbookActivity extends AppCompatActivity {
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.recipeList)
-    ListView recipeListView;
+    @Bind(R.id.toolbarMain) Toolbar toolbar;
+    @Bind(R.id.recipeList) ListView recipeListView;
     SimpleCursorAdapter adapter;
     Cursor recipeListCursor;
     SQLiteDatabase db;
@@ -54,18 +56,18 @@ public class CookbookActivity extends AppCompatActivity {
     }
 
 
-//    @OnClick(R.id.fab)
-//    public void onFABClick(View view) {
-//        Intent intent = new Intent(this, RecipeEditorActivity.class);
-//        startActivityForResult(intent, 1);
-//    }
     @OnClick(R.id.fab)
     public void onFABClick(View view) {
-        Intent intent = new Intent(this, CookbookHelperActivity.class);
-        startActivity(intent);
+        Intent intent = new Intent(this, RecipeEditorActivity.class);
+        startActivityForResult(intent, 1);
     }
 
-
+    @OnItemLongClick(R.id.recipeList)
+    public boolean onListItemLongClicked(int position){
+        Intent intent = new Intent(this, CookbookHelperActivity.class);
+        startActivity(intent);
+        return true;
+    }
     @OnItemClick(R.id.recipeList)
     public void onListItemClicked(int position) {
         String itemId = String.valueOf(adapter.getItemId(position));
