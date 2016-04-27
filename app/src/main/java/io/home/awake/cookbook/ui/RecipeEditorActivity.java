@@ -6,11 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.DatePicker;
 import android.widget.EditText;
-
-import java.util.Calendar;
-import static java.util.Calendar.*;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,7 +34,7 @@ public class RecipeEditorActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_cookbook, menu);
+        getMenuInflater().inflate(R.menu.menu_edit_cookbook, menu);
         return true;
     }
 

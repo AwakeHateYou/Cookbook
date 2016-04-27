@@ -2,8 +2,9 @@
     <string name="app_name">Cookbook</string>
     <string name="action_settings">Settings</string>
     <string name="save">Save</string>
+    <string name="filter">Filter</string>
     <string name="recipe_editor">Edit</string>
-    <string name="cook_helper">Cook helper</string>
+    <string name="cook_helper">CookHelper</string>
     <string name="title">Title</string>
     <string name="ingredients">Ingredients</string>
     <string name="steps">Steps</string>

@@ -9,6 +9,7 @@ import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -55,7 +56,11 @@ public class CookbookActivity extends AppCompatActivity {
         recipeListView.setAdapter(adapter);
     }
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_filter, menu);
+        return true;
+    }
     @OnClick(R.id.fab)
     public void onFABClick(View view) {
         Intent intent = new Intent(this, RecipeEditorActivity.class);

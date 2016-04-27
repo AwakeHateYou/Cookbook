@@ -15,7 +15,7 @@ import io.home.awake.cookbook.fragments.IngredientsFragment;
 import io.home.awake.cookbook.fragments.StepsFragment;
 import io.home.awake.cookbook.util.FragmentPageAdapterHelper;
 
-public class CookbookHelperActivity extends FragmentActivity {
+public class CookbookHelperActivity extends AppCompatActivity {
     @Bind(R.id.pager) ViewPager mViewPager;
     @Bind(R.id.toolbarHelper) Toolbar toolbar;
     private String ingredientsText;
@@ -25,6 +25,8 @@ public class CookbookHelperActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cookbook_helper);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Cook helper");
         Recipe recipe = getIntent().getParcelableExtra("recipe");
         if (recipe != null) {
             ingredientsText = recipe.getIngredients();
