@@ -12,9 +12,11 @@ import io.home.awake.cookbook.fragments.StepsFragment;
  */
 public class FragmentPageAdapterHelper extends FragmentPagerAdapter {
     private String ingredients;
-    public FragmentPageAdapterHelper(FragmentManager mgr, String text) {
+    private String steps;
+    public FragmentPageAdapterHelper(FragmentManager mgr, String ingredients, String steps) {
         super(mgr);
-        ingredients = text;
+        this.ingredients = ingredients;
+        this.steps = steps;
     }
     @Override
     public int getCount() {
@@ -23,9 +25,9 @@ public class FragmentPageAdapterHelper extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(position != 1) {
-            return (IngredientsFragment.newInstance(position, ingredients));
+            return (IngredientsFragment.newInstance(ingredients));
         }else {
-            return (StepsFragment.newInstance(position));
+            return (StepsFragment.newInstance(steps));
         }
     }
 }

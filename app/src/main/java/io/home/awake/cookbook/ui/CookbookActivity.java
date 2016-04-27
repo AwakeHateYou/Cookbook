@@ -63,13 +63,7 @@ public class CookbookActivity extends AppCompatActivity {
     }
 
     @OnItemLongClick(R.id.recipeList)
-    public boolean onListItemLongClicked(int position){
-        Intent intent = new Intent(this, CookbookHelperActivity.class);
-        startActivity(intent);
-        return true;
-    }
-    @OnItemClick(R.id.recipeList)
-    public void onListItemClicked(int position) {
+    public boolean onListItemLongClicked(int position) {
         String itemId = String.valueOf(adapter.getItemId(position));
         Cursor cursor = db.query("recipes", null,
                 "_id = ?", new String[]{itemId}, null, null, null);
@@ -83,6 +77,23 @@ public class CookbookActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RecipeEditorActivity.class);
         intent.putExtra("recipe", recipe);
         startActivityForResult(intent, 1);
+        return true;
+    }
+    @OnItemClick(R.id.recipeList)
+    public void onListItemClicked(int position){
+        String itemId = String.valueOf(adapter.getItemId(position));
+        Cursor cursor = db.query("recipes", null,
+                "_id = ?", new String[]{itemId}, null, null, null);
+        cursor.moveToNext();
+        Recipe recipe = new Recipe(
+                Integer.valueOf(cursor.getInt(cursor.getColumnIndex("_id"))),
+                cursor.getString(cursor.getColumnIndex("title")),
+                cursor.getString(cursor.getColumnIndex("ingredients")),
+                cursor.getString(cursor.getColumnIndex("steps")));
+        cursor.close();
+        Intent intent = new Intent(this, CookbookHelperActivity.class);
+        intent.putExtra("recipe", recipe);
+        startActivity(intent);
     }
 
     public void swipe() {

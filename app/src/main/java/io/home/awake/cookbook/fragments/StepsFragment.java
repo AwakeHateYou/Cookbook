@@ -13,12 +13,11 @@ import io.home.awake.cookbook.R;
 
 
 public class StepsFragment extends Fragment {
-    private int pageNumber;
-
-    public static StepsFragment newInstance(int page) {
+    private String steps;
+    public static StepsFragment newInstance(String steps) {
         StepsFragment fragment = new StepsFragment();
         Bundle args = new Bundle();
-        args.putInt("num", page);
+        args.putString("steps", steps);
         fragment.setArguments(args);
         return fragment;
     }
@@ -29,7 +28,7 @@ public class StepsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageNumber = 1;
+        steps = getArguments() != null ? getArguments().getString("steps") : "";
     }
 
     @Override
@@ -37,7 +36,7 @@ public class StepsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View result=inflater.inflate(R.layout.fragment_steps, container, false);
         TextView pageHeader = (TextView)result.findViewById(R.id.stepsTextFragment);
-        pageHeader.setText("ФрагментB " + String.valueOf(pageNumber));
+        pageHeader.setText(steps);
         return result;
     }
 }
