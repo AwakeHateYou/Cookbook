@@ -14,7 +14,7 @@ import io.home.awake.cookbook.activity.CookbookActivity;
 /**
  * Кастомный диалог фильтра ингредиентов.
  */
-public class CustomDialogFragment extends DialogFragment implements
+public class CustomFilterDialogFragment extends DialogFragment implements
         DialogInterface.OnClickListener {
     /**
      *

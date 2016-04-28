@@ -51,11 +51,18 @@ public class RecipeEditorActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Нажата кнопка сохранить.
+     */
     public void onSaveButtonClick() {
         Recipe recipe = getIntent().getParcelableExtra("recipe");
         if (recipe == null)
             recipe = new Recipe();
-        recipe.setTitle(titleText.getText().toString());
+        if(titleText.getText().toString().length() != 0) {
+            recipe.setTitle(titleText.getText().toString());
+        }else{
+            recipe.setTitle("untitled");
+        }
         recipe.setIngredients(ingredientsText.getText().toString());
         recipe.setSteps(stepsText.getText().toString());
         Intent resultIntent = new Intent();
@@ -64,6 +71,9 @@ public class RecipeEditorActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Нажата кнопка назад
+     */
     public void onUpButtonClick() {
         setResult(RESULT_CANCELED);
         finish();

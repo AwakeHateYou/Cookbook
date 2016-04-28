@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
@@ -20,8 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 import butterknife.OnItemLongClick;
-import io.home.awake.cookbook.fragments.CustomDialogFragment;
-import io.home.awake.cookbook.util.CustomDialogInterface;
+import io.home.awake.cookbook.fragments.CustomFilterDialogFragment;
 import io.home.awake.cookbook.util.DBHelper;
 import io.home.awake.cookbook.R;
 import io.home.awake.cookbook.model.Recipe;
@@ -89,7 +87,7 @@ public class CookbookActivity extends AppCompatActivity{
     }
     public void onFilterButtonClick() {
 
-        new CustomDialogFragment().show(getSupportFragmentManager(), "filter");
+        new CustomFilterDialogFragment().show(getSupportFragmentManager(), "filter");
     }
     public void onUpButtonClick() {
         setResult(RESULT_CANCELED);
