@@ -22,7 +22,7 @@ public class CookbookHelperActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cookbook_helper);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Cook helper");
+        getSupportActionBar().setTitle("Помощник по приготовлению");
         Recipe recipe = getIntent().getParcelableExtra("recipe");
         if (recipe != null) {
             ingredientsText = recipe.getIngredients();

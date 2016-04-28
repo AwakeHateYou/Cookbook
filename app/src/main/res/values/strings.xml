@@ -3,13 +3,12 @@
     <string name="action_settings">Settings</string>
     <string name="save">Save</string>
     <string name="filter">Filter</string>
+    <string name="refresh">Refresh</string>
     <string name="recipe_editor">Edit</string>
     <string name="cook_helper">CookHelper</string>
     <string name="title">Title</string>
     <string name="ingredients">Ingredients</string>
     <string name="steps">Steps</string>
     <string name="lets_cook">Cook</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Blank fragment</string>
 </resources>

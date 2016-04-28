@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
@@ -18,37 +20,41 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 import butterknife.OnItemLongClick;
+import io.home.awake.cookbook.fragments.CustomDialogFragment;
+import io.home.awake.cookbook.util.CustomDialogInterface;
 import io.home.awake.cookbook.util.DBHelper;
 import io.home.awake.cookbook.R;
 import io.home.awake.cookbook.model.Recipe;
 import io.home.awake.cookbook.util.SwipeDismissListViewTouchListener;
 
-public class CookbookActivity extends AppCompatActivity {
+public class CookbookActivity extends AppCompatActivity{
     @Bind(R.id.toolbarMain) Toolbar toolbar;
     @Bind(R.id.recipeList) ListView recipeListView;
-    SimpleCursorAdapter adapter;
-    Cursor recipeListCursor;
-    SQLiteDatabase db;
-    DBHelper dbh;
-
+    private SimpleCursorAdapter adapter;
+    private Cursor recipeListCursor;
+    private SQLiteDatabase db;
+    private DBHelper dbh;
+    final static int EDITOR_CODE = 1;
+    private String[] lineIngredients;
+    private String sqlRAW = "select * from recipes";
+//    private Bundle sqlBundle = new Bundle();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cookbook);
         ButterKnife.bind(this);
+        if(savedInstanceState != null){
+            sqlRAW = savedInstanceState.getString("sql");
+        }
         setSupportActionBar(toolbar);
         dbh = new DBHelper(getApplication());
         db = dbh.getWritableDatabase();
-        // db.execSQL("insert into recipes(title, ingredients, steps) values('Яйцо', 'коко', '123')");
         initListAdapter();
         swipe();
     }
 
     private void initListAdapter() {
-        String[] param = new String[]{"Яйцо"};
-//        recipeListCursor = db.rawQuery("select * from recipes where ingredients like '%лук%'", null);
-        recipeListCursor = db.query("recipes", null, null, null, null, null, "_id desc");
-        // tableName, tableColumns, whereClause, whereArgs, groupBy, having, orderBy
+        recipeListCursor = db.rawQuery(sqlRAW, null);
         String[] from = new String[]{"title"};
         int[] to = new int[]{R.id.titleText};
         adapter = new SimpleCursorAdapter(this,
@@ -62,10 +68,60 @@ public class CookbookActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_filter, menu);
         return true;
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                onRefreshButtonCLick();
+                return true;
+            case R.id.action_filter:
+                onFilterButtonClick();
+                return true;
+            case android.R.id.home:
+                onUpButtonClick();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    public void onRefreshButtonCLick() {
+        sqlRAW = "select * from recipes";
+        initListAdapter();
+    }
+    public void onFilterButtonClick() {
+
+        new CustomDialogFragment().show(getSupportFragmentManager(), "filter");
+    }
+    public void onUpButtonClick() {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
+    public void onUserSelectValue(String selectedValue) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(selectedValue.trim().replaceAll("\\s+", " "));
+        String str = stringBuilder.toString();
+        if(!str.isEmpty()) {
+            lineIngredients = stringToStringArray(str);
+            String firstStr = " and ingredients like'%";
+            String secondStr = "%'";
+            lineIngredients[0] = " like '%" + lineIngredients[0] + secondStr;
+            for (int i = 1; i < lineIngredients.length; i++) {
+                lineIngredients[i] = firstStr + lineIngredients[i] + secondStr;
+            }
+            sqlRAW = "select * from recipes where ingredients";
+            for(String line : lineIngredients){
+                sqlRAW = sqlRAW + line;
+            }
+        }
+
+        initListAdapter();
+    }
+    private String[] stringToStringArray(String source) {
+        return source.split("\\s+");
+    }
     @OnClick(R.id.fab)
     public void onFABClick(View view) {
         Intent intent = new Intent(this, RecipeEditorActivity.class);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, EDITOR_CODE);
     }
 
     @OnItemLongClick(R.id.recipeList)
@@ -82,7 +138,7 @@ public class CookbookActivity extends AppCompatActivity {
         cursor.close();
         Intent intent = new Intent(this, RecipeEditorActivity.class);
         intent.putExtra("recipe", recipe);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, EDITOR_CODE);
         return true;
     }
     @OnItemClick(R.id.recipeList)
@@ -125,7 +181,7 @@ public class CookbookActivity extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
+        if (requestCode == EDITOR_CODE) {
             if (resultCode != RESULT_OK) return;
             Recipe recipe = data.getParcelableExtra("recipe");
             ContentValues cv = new ContentValues();
@@ -142,6 +198,16 @@ public class CookbookActivity extends AppCompatActivity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("sql", sqlRAW);
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        sqlRAW = savedInstanceState.getString("sql");
     }
 
 }
