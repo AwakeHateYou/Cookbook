@@ -25,6 +25,9 @@ import io.home.awake.cookbook.R;
 import io.home.awake.cookbook.model.Recipe;
 import io.home.awake.cookbook.util.SwipeDismissListViewTouchListener;
 
+/**
+ * Главное окно с рецептами.
+ */
 public class CookbookActivity extends AppCompatActivity{
     @Bind(R.id.toolbarMain) Toolbar toolbar;
     @Bind(R.id.recipeList) ListView recipeListView;
@@ -32,10 +35,15 @@ public class CookbookActivity extends AppCompatActivity{
     private Cursor recipeListCursor;
     private SQLiteDatabase db;
     private DBHelper dbh;
+    /**
+     * Код обмена интентом с эдитором.
+     */
     final static int EDITOR_CODE = 1;
     private String[] lineIngredients;
+    /**
+     * Raw sql string.
+     */
     private String sqlRAW = "select * from recipes";
-//    private Bundle sqlBundle = new Bundle();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +59,9 @@ public class CookbookActivity extends AppCompatActivity{
         swipe();
     }
 
+    /**
+     * Инициализация списка рецептов.
+     */
     private void initListAdapter() {
         recipeListCursor = db.rawQuery(sqlRAW, null);
         String[] from = new String[]{"title"};
@@ -81,10 +92,18 @@ public class CookbookActivity extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Кнопка обновить.
+     */
     public void onRefreshButtonCLick() {
         sqlRAW = "select * from recipes";
         initListAdapter();
     }
+
+    /**
+     * Диалог с выбором ингредиента.
+     */
     public void onFilterButtonClick() {
 
         new CustomFilterDialogFragment().show(getSupportFragmentManager(), "filter");
@@ -93,10 +112,23 @@ public class CookbookActivity extends AppCompatActivity{
         setResult(RESULT_CANCELED);
         finish();
     }
+
+    /**
+     * Обработка выбраных ингредиентов.
+     * @param selectedValue строка с ингредиентами
+     */
     public void onUserSelectValue(String selectedValue) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(selectedValue.trim().replaceAll("\\s+", " "));
         String str = stringBuilder.toString();
+        generateSQLRAW(str);
+    }
+
+    /**
+     * Генерация запроса на отборку по ингредиентам.
+     * @param str строка с ингредиентами
+     */
+    public void generateSQLRAW(String str){
         if(!str.isEmpty()) {
             lineIngredients = stringToStringArray(str);
             String firstStr = " and ingredients like'%";
@@ -113,15 +145,31 @@ public class CookbookActivity extends AppCompatActivity{
 
         initListAdapter();
     }
+
+    /**
+     * Разделение строки на массив.
+     * @param source строка
+     * @return массив
+     */
     private String[] stringToStringArray(String source) {
         return source.split("\\s+");
     }
+
+    /**
+     * Создание нового рецепта.
+     * @param view
+     */
     @OnClick(R.id.fab)
     public void onFABClick(View view) {
         Intent intent = new Intent(this, RecipeEditorActivity.class);
         startActivityForResult(intent, EDITOR_CODE);
     }
 
+    /**
+     * Редактирование рецепта.
+     * @param position
+     * @return
+     */
     @OnItemLongClick(R.id.recipeList)
     public boolean onListItemLongClicked(int position) {
         String itemId = String.valueOf(adapter.getItemId(position));
@@ -139,6 +187,11 @@ public class CookbookActivity extends AppCompatActivity{
         startActivityForResult(intent, EDITOR_CODE);
         return true;
     }
+
+    /**
+     * Помощник по готовке.
+     * @param position
+     */
     @OnItemClick(R.id.recipeList)
     public void onListItemClicked(int position){
         String itemId = String.valueOf(adapter.getItemId(position));
@@ -156,6 +209,9 @@ public class CookbookActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
+    /**
+     * Обработка свайпа на удаление.
+     */
     public void swipe() {
         SwipeDismissListViewTouchListener touchListener =
                 new SwipeDismissListViewTouchListener(
@@ -169,14 +225,21 @@ public class CookbookActivity extends AppCompatActivity{
                             @Override
                             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
-                                    db.delete("recipes", "_id = " + String.valueOf(adapter.getItemId(position)), null);
-                                    recipeListCursor.requery();
+                                        db.delete("recipes", "_id = " + String.valueOf(adapter.getItemId(position)), null);
+                                        recipeListCursor.requery();
                                 }
                                 adapter.notifyDataSetChanged();
                             }
                         });
         recipeListView.setOnTouchListener(touchListener);
     }
+
+    /**
+     * Получение результатов.
+     * @param requestCode код
+     * @param resultCode код
+     * @param data интент
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == EDITOR_CODE) {
@@ -197,11 +260,21 @@ public class CookbookActivity extends AppCompatActivity{
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+    /**
+     * Сохранение запроса.
+     * @param savedInstanceState
+     */
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString("sql", sqlRAW);
     }
+
+    /**
+     * Восстановление запроса.
+     * @param savedInstanceState
+     */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);

@@ -5,7 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * РћРґРёРЅ СЂРµС†РµРїС‚.
+ * Модель рецепта.
  */
 public class Recipe implements Parcelable{
     int id;
@@ -13,18 +13,35 @@ public class Recipe implements Parcelable{
     public Recipe(){
         this.id = 0;
     }
+
+    /**
+     * Конструктор
+     * @param id
+     * @param title
+     * @param ingredients
+     * @param steps
+     */
     public Recipe(int id, String title, String ingredients, String steps){
         this.id = id;
         this.title = title;
         this.ingredients = ingredients;
         this.steps = steps;
     }
+
+    /**
+     * Конструктор из пакета.
+     * @param in
+     */
     public Recipe(Parcel in){
         id = in.readInt();
         title =  in.readString();
         ingredients = in.readString();
         steps = in.readString();
     }
+
+    /**
+     * Создание рецепта в бд.
+     */
     public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
         @Override
         public Recipe createFromParcel(Parcel in) {
@@ -68,6 +85,12 @@ public class Recipe implements Parcelable{
     public boolean isNew() {
         return id == 0;
     }
+
+    /**
+     * Запись в пакет.
+     * @param dest
+     * @param flags
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);

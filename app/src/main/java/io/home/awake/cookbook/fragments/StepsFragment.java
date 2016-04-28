@@ -1,20 +1,17 @@
 package io.home.awake.cookbook.fragments;
 
-import android.content.Context;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import io.home.awake.cookbook.R;
 
-
+/**
+ * Экран помощи в готовке(шаги).
+ */
 public class StepsFragment extends Fragment {
     private String steps;
     public static StepsFragment newInstance(String steps) {

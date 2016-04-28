@@ -13,6 +13,9 @@ import butterknife.ButterKnife;
 import io.home.awake.cookbook.R;
 import io.home.awake.cookbook.model.Recipe;
 
+/**
+ * Окно изменения и создания рецепта.
+ */
 public class RecipeEditorActivity extends AppCompatActivity {
     @Bind(R.id.titleText) EditText titleText;
     @Bind(R.id.ingredientsText) EditText ingredientsText;
@@ -50,6 +53,7 @@ public class RecipeEditorActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     /**
      * Нажата кнопка сохранить.

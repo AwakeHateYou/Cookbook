@@ -11,6 +11,9 @@ import io.home.awake.cookbook.R;
 import io.home.awake.cookbook.model.Recipe;
 import io.home.awake.cookbook.util.FragmentPageAdapterHelper;
 
+/**
+ * Окно помощи с готовкой.
+ */
 public class CookbookHelperActivity extends AppCompatActivity {
     @Bind(R.id.pager) ViewPager mViewPager;
     @Bind(R.id.toolbarHelper) Toolbar toolbar;

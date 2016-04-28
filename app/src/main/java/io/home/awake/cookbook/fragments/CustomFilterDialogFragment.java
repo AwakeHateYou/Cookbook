@@ -16,12 +16,12 @@ import io.home.awake.cookbook.activity.CookbookActivity;
  */
 public class CustomFilterDialogFragment extends DialogFragment implements
         DialogInterface.OnClickListener {
-    /**
-     *
-     */
-    private View form = null;
-    private EditText filterBox;
 
+    private View form = null;
+    /**
+     * Поле для ввода.
+     */
+    private EditText filterBox;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -42,13 +42,5 @@ public class CustomFilterDialogFragment extends DialogFragment implements
         callingActivity.onUserSelectValue(value);
         dialog.dismiss();
 
-    }
-    @Override
-    public void onDismiss(DialogInterface unused) {
-        super.onDismiss(unused);
-    }
-    @Override
-    public void onCancel(DialogInterface unused) {
-        super.onCancel(unused);
     }
 }
