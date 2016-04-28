@@ -1,7 +1,6 @@
-package io.home.awake.cookbook;
+package io.home.awake.cookbook.model;
 
 
-import android.content.ReceiverCallNotAllowedException;
 import android.os.Parcel;
 import android.os.Parcelable;
 

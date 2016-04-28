@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.CookbookActivity"
+            android:name=".activity.CookbookActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,11 +19,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.RecipeEditorActivity"
+            android:name=".activity.RecipeEditorActivity"
             android:label="@string/recipe_editor">
         </activity>
         <activity
-            android:name=".ui.CookbookHelperActivity"
+            android:name=".activity.CookbookHelperActivity"
             android:label="@string/cook_helper"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

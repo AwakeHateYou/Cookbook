@@ -1,4 +1,4 @@
-package io.home.awake.cookbook.ui;
+package io.home.awake.cookbook.activity;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 
 import butterknife.Bind;
@@ -19,10 +18,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 import butterknife.OnItemLongClick;
-import butterknife.OnLongClick;
-import io.home.awake.cookbook.DBHelper;
+import io.home.awake.cookbook.util.DBHelper;
 import io.home.awake.cookbook.R;
-import io.home.awake.cookbook.Recipe;
+import io.home.awake.cookbook.model.Recipe;
 import io.home.awake.cookbook.util.SwipeDismissListViewTouchListener;
 
 public class CookbookActivity extends AppCompatActivity {
@@ -47,7 +45,10 @@ public class CookbookActivity extends AppCompatActivity {
     }
 
     private void initListAdapter() {
+        String[] param = new String[]{"Яйцо"};
+//        recipeListCursor = db.rawQuery("select * from recipes where ingredients like '%лук%'", null);
         recipeListCursor = db.query("recipes", null, null, null, null, null, "_id desc");
+        // tableName, tableColumns, whereClause, whereArgs, groupBy, having, orderBy
         String[] from = new String[]{"title"};
         int[] to = new int[]{R.id.titleText};
         adapter = new SimpleCursorAdapter(this,

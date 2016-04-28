@@ -1,4 +1,4 @@
-package io.home.awake.cookbook;
+package io.home.awake.cookbook.util;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -31,7 +31,6 @@ public class StepsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(getActivity());
         steps = getArguments() != null ? getArguments().getString("steps") : "";
     }
 

@@ -1,4 +1,4 @@
-package io.home.awake.cookbook.ui;
+package io.home.awake.cookbook.activity;
 
 
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.widget.EditText;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.home.awake.cookbook.R;
-import io.home.awake.cookbook.Recipe;
+import io.home.awake.cookbook.model.Recipe;
 
 public class RecipeEditorActivity extends AppCompatActivity {
     @Bind(R.id.titleText) EditText titleText;
